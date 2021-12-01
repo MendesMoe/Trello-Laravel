@@ -44,10 +44,12 @@ class AdminController extends Controller
     {
         return view('admin.login');
     }
+
     public function guard()
     {
         return Auth::guard('admin');
     }
+
     public function loginAdmin(Request $request)
     {
 

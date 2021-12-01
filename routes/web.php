@@ -26,15 +26,17 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('/tables', TableController::class);
+Route::middleware('auth')->group(function () {
 
-Route::resource('/columns', ColumnController::class);
+    Route::resource('/tables', TableController::class);
+
+    Route::resource('/columns', ColumnController::class);
 
 
-Route::resource('/tickets', TicketController::class);
+    Route::resource('/tickets', TicketController::class);
 
-Route::resource('/comments', CommentController::class);
-
+    Route::resource('/comments', CommentController::class);
+});
 
 Route::get('/admin', [App\Http\Controllers\Admin\AdminController::class, 'showLoginForm'])->name('admin.loginForm');
 Route::post('/admin', [App\Http\Controllers\Admin\AdminController::class, 'loginAdmin'])->name('admin.login');
@@ -44,7 +46,6 @@ Route::get('/admin/users', [App\Http\Controllers\UserController::class, 'index']
 // update utilisateur par l' admin
 Route::put('/admin/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('admin.update');
 Route::delete('/admin/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('admin.delete');
-
 
 Route::get('/profil', function () {
     return view('trello.profil');
